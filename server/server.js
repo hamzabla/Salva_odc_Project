@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const config = require("./helpers/config");
 const cors = require("cors");
 
-const users = require('./routes/userRoute');
+const reviews = require('./routes/reviewRoute');
 
 
 
@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/v1/users',users);
+app.use('/api/v1/reviews',reviews);
 
 
 app.listen(config.port, () => console.log(`Server started on port ${config.port}`));

@@ -5,11 +5,8 @@ let errorHandler = async (req,res,next)=>{
     if(errorCode === 'missing required values'){
         errorMsg = "Missing required values!!";
     }
-    if(errorCode === 'Account already exist'){
-        errorMsg = "Account already exist!!";
-    }
-    if(errorCode === 'invalid user data'){
-        errorMsg = "invalid user data!!";
+    if(errorCode === 'invalid review data'){
+        errorMsg = "invalid review data!!";
     }
     res.status(400).json({success:false,error:errorMsg});
 

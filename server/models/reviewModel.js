@@ -1,13 +1,9 @@
-class User {
-    constructor(fullName, UserName, phone, email,
-        password, role ) {
-            this.fullName = fullName;
-            this.userName = UserName;
-            this.phone = phone;
-            this.email = email;
-            this.password = password;
-            this.role = role;
+class Review {
+    constructor(ReviewOwner, Body, rating) {
+            this.ReviewOwner = ReviewOwner;
+            this.Body = Body;
+            this.rating = rating;
     }
 }
 
-module.exports = User;
+module.exports = Review;
