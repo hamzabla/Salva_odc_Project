@@ -1,16 +1,15 @@
-const firebase = require('firebase');
 const config = require('./config');
 
-const connectDB = async () => {
-    try {
-        const conn = await firebase.initializeApp(config.firebaseConfig);
-        console.log(`Firebase Connected: ${conn}`.cyan.underline);
-      } catch (error) {
-        console.log(error);
-        process.exit(1);
-      }
-    
-};
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+
+const serviceAccount = require('../serviceAccountKey.json');
+
+initializeApp({
+  credential: cert(serviceAccount)
+});
+
+const db = getFirestore();
 
 
-module.exports = connectDB;
+module.exports = {db};

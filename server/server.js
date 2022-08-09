@@ -1,14 +1,12 @@
 const express = require("express");
 const colors = require("colors");
 const morgan = require("morgan");
-const connectDB = require("./helpers/firestoreHandler");
 const config = require("./helpers/config");
 const cors = require("cors");
 
 const users = require('./routes/userRoute');
 
 
-connectDB();
 
 const app = express();
 app.use(morgan("dev"));
