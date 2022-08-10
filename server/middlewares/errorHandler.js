@@ -11,7 +11,7 @@ let errorHandler = async (req,res,next)=>{
     if(errorCode === 'invalid user data'){
         errorMsg = "invalid user data!!";
     }
-    res.status(400).json({success:false,error:errorMsg});
+    res.status(404).json({success:false,error:errorMsg});
 
 }
 
