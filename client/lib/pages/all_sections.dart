@@ -123,7 +123,6 @@ class _AllSectionsState extends State<AllSections> {
           ),
         ],
       ),
-      bottomNavigationBar: NavBarWidget(),
     );
   }
 }

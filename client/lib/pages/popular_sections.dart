@@ -68,7 +68,7 @@ class _PopularSectionsState extends State<PopularSections> {
                   color: Color(0xff072983),
                 ),
               ),
-              SizedBox(width: 80,),
+              SizedBox(width: 70,),
               ElevatedButton(
                   child: Text(
                     "Add section".toUpperCase(),
@@ -86,7 +86,7 @@ class _PopularSectionsState extends State<PopularSections> {
                           )
                       )
                   ),
-                  onPressed: () => null
+                  onPressed: () => print('hola')
               ),
             ],),
           ),
@@ -123,7 +123,6 @@ class _PopularSectionsState extends State<PopularSections> {
           ),
         ],
       ),
-      bottomNavigationBar: NavBarWidget(),
     );
   }
 }

@@ -155,8 +155,7 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      // bottom navigation
-      bottomNavigationBar: NavBarWidget(), // CurvedNavigationBar
+      // bottom navigation// CurvedNavigationBar
     ); // Scaffold
   }
 }

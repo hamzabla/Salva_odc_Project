@@ -6,14 +6,11 @@ import '../Widgets/Menu.dart';
 import '../Widgets/SearchBar.dart';
 
 class SavedSections extends StatefulWidget {
-
   @override
   _SavedSectionsState createState() => _SavedSectionsState();
 }
 
-
 class _SavedSectionsState extends State<SavedSections> {
-
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -49,29 +46,34 @@ class _SavedSectionsState extends State<SavedSections> {
         children: <Widget>[
           SearchBarWidget(),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 120.0, horizontal: 15.0),
-            child: Row(children: [
-              SizedBox(width: 35,),
-              Icon(
-                Icons.bookmark_outline,
-                color: Color(0xff072983),
-                size: 18,
-              ),
-              SizedBox(
-                width: 10.0,
-              ),
-              Text(
-                'SAVED',
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xff072983),
+            padding:
+                const EdgeInsets.symmetric(vertical: 130, horizontal: 25.0),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 35,
                 ),
-              ),
-            ],),
+                Icon(
+                  Icons.bookmark_outline,
+                  color: Color(0xff072983),
+                  size: 18,
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(
+                  'SAVED',
+                  style: GoogleFonts.poppins(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff072983),
+                  ),
+                ),
+              ],
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 14, top: 160, bottom: 0.50),
+            margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50),
             child: Column(
               children: [
                 Expanded(
@@ -103,7 +105,6 @@ class _SavedSectionsState extends State<SavedSections> {
           ),
         ],
       ),
-      bottomNavigationBar: NavBarWidget(),
     );
   }
 }
@@ -123,14 +124,17 @@ class SectionWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(25.0),
           ),
           elevation: 5,
-          child:  Container(
-            decoration:BoxDecoration(
-                image:  DecorationImage(
-                  image: NetworkImage('https://placeimg.com/640/480/nature'),
-                  fit: BoxFit.fill, )
-            ),
+          child: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+              image: NetworkImage('https://placeimg.com/640/480/nature'),
+              fit: BoxFit.fill,
+            )),
             child: Container(
-              margin: EdgeInsets.only(top: 140,left: 15,),
+              margin: EdgeInsets.only(
+                top: 140,
+                left: 15,
+              ),
               padding: EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
