@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
 
 import '../Widgets/Menu.dart';
 
@@ -9,8 +11,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final double coverHeight = 280;
-  final double profilHeight = 144;
+  final double coverHeight = 180;
+  final double profilHeight = 115;
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -58,15 +60,103 @@ class _ProfileState extends State<Profile> {
             height: 100,
           ),
           Infos(),
+          SizedBox(
+            height: 30,
+          ),
+          Text(
+            'Other ways to find us',
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color(0xff072983),
+            ),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Divider(
+            color: Color(0xff8C7A7A),
+          ),
+          SizedBox(height: 12,),
+          IconsWidgets(),
+          SizedBox(height: 12,),
+          Divider(
+            color: Color(0xff8C7A7A),
+          ),
+          SizedBox(height: 12,),
+          HelpWidgets(),
         ],
       ),
     );
   }
 
+  Widget HelpWidgets() => Row(
+    children: [
+      SizedBox(width: 80,),
+      Icon(
+        FontAwesomeIcons.handsHelping,
+        color: Color(0xff072983),
+        size: 15,
+      ),
+      SizedBox(width: 25,),
+      Text(
+        'Help and feedback',
+        style: GoogleFonts.poppins(
+          fontSize: 16,
+          fontWeight: FontWeight.w300,
+          color: Color(0xff072983),
+        ),
+      ),
+      SizedBox(
+        width: 25,
+      ),
+      Icon(
+        FontAwesomeIcons.share,
+        color: Color(0xff072983),
+        size: 15,
+      ),
+    ],
+  );
+
+  Widget IconsWidgets() => Row(
+        children: [
+          SizedBox(width: 50,),
+          Icon(
+            FontAwesomeIcons.facebook,
+            color: Color(0xff072983),
+            size: 35,
+          ),
+          SizedBox(
+            width: 50,
+          ),
+          Icon(
+            FontAwesomeIcons.instagram,
+            color: Color(0xff072983),
+            size: 35,
+          ),
+          SizedBox(
+            width: 50,
+          ),
+          Icon(
+            FontAwesomeIcons.twitter,
+            color: Color(0xff072983),
+            size: 35,
+          ),
+          SizedBox(
+            width: 50,
+          ),
+          Icon(
+            FontAwesomeIcons.linkedin,
+            color: Color(0xff072983),
+            size: 35,
+          ),
+        ],
+      );
+
   Widget buildCoverImage() => Container(
         color: Colors.grey,
         child: Image.network(
-          'https://placeimg.com/640/480/nature',
+          'https://placeimg.com/500/480/nature',
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,
@@ -81,30 +171,30 @@ class _ProfileState extends State<Profile> {
       );
 
   Widget Infos() => Container(
-    width: 350,
-    height: 100,
-    decoration: BoxDecoration(
-      color: Color(0xff072983),
-      borderRadius: BorderRadius.all(Radius.circular(15)),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 2,
-          blurRadius: 3,
-          offset: Offset(0, 2), // changes position of shadow
+        width: 380,
+        height: 150,
+        decoration: BoxDecoration(
+          color: Color(0xff072983),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: Offset(0, 2), // changes position of shadow
+            ),
+          ],
         ),
-      ],
-    ),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20.0,top: 12.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 25.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.person_outline,
                     color: Color(0xffFFFFFF),
-                    size: 12,
+                    size: 14,
                   ),
                   SizedBox(
                     width: 10.0,
@@ -112,7 +202,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     'Username',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xffFFFFFF),
                     ),
@@ -123,7 +213,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     'Ahmed.karimi',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w300,
                       color: Color(0xffFFFFFF),
                     ),
@@ -132,13 +222,13 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0,top: 2.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 10.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.phone_outlined,
                     color: Color(0xffFFFFFF),
-                    size: 12,
+                    size: 14,
                   ),
                   SizedBox(
                     width: 10.0,
@@ -146,7 +236,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     'Contact',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xffFFFFFF),
                     ),
@@ -157,7 +247,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     '+245 6554788',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w300,
                       color: Color(0xffFFFFFF),
                     ),
@@ -166,13 +256,13 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20.0,top: 2.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 10.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.email_outlined,
                     color: Color(0xffFFFFFF),
-                    size: 12,
+                    size: 14,
                   ),
                   SizedBox(
                     width: 10.0,
@@ -180,7 +270,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     'Email',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Color(0xffFFFFFF),
                     ),
@@ -191,7 +281,7 @@ class _ProfileState extends State<Profile> {
                   Text(
                     'ahmed.karmi@gmail.com',
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w300,
                       color: Color(0xffFFFFFF),
                     ),

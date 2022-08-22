@@ -38,6 +38,8 @@ dependencies:
   flutter_spinkit: ^5.1.0
   google_fonts: ^3.0.1
   smooth_page_indicator: ^1.0.0+2
+  social_login_buttons: ^1.0.6+2
+  font_awesome_flutter: ^10.1.0
 
 dev_dependencies:
   flutter_test:
