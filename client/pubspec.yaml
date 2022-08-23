@@ -40,6 +40,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   social_login_buttons: ^1.0.6+2
   font_awesome_flutter: ^10.1.0
+  flutter_map: ^2.2.0
+  latlng: ^0.2.0
+  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_test:

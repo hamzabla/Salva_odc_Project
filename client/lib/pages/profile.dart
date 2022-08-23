@@ -153,6 +153,7 @@ class _ProfileState extends State<Profile> {
         ],
       );
 
+
   Widget buildCoverImage() => Container(
         color: Colors.grey,
         child: Image.network(
