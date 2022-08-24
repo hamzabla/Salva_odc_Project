@@ -57,7 +57,7 @@ if (review) {
 
 
 
-//get user by id
+//get review by id
 const getReviewById = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     let review = '';
@@ -87,7 +87,7 @@ const getReviewById = asyncHandler(async (req, res, next) => {
 
 const getAllReviews = asyncHandler(async (req, res, next) => {
     let reviews = [];
-    const querySnapshot = await db.collection('users').get();
+    const querySnapshot = await db.collection('reviews').get();
     querySnapshot.forEach((doc) => {
         let added= doc.data();
         reviews.push(added) ;
@@ -96,8 +96,8 @@ const getAllReviews = asyncHandler(async (req, res, next) => {
     res.status(200).json(
         {
             success: true,
-            operation: "getting all users ",
-            count: review.length,
+            operation: "getting all reviews ",
+            count: reviews.length,
             data: {
                 reviews
             }
@@ -107,7 +107,7 @@ const getAllReviews = asyncHandler(async (req, res, next) => {
 });
 
 
-//update user
+//update review
 const updateReview = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const {
@@ -152,7 +152,7 @@ if(doc.id ===  id) {
    
 });
 
-// delete user
+// delete review
 const deleteReview = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const conn= db.collection('reviews');
