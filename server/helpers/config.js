@@ -16,8 +16,9 @@ const {
     MESSAGING_SENDER_ID,
     APP_ID
 } = process.env;
-
+console.log("holaa");
 assert(PORT, 'PORT is required');
+console.log("Bonjour");
 assert(HOST, 'HOST is required');
 
 module.exports = {
