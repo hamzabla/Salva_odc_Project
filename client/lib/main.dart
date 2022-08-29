@@ -1,4 +1,8 @@
+import 'package:client/pages/SignUp.dart';
+import 'package:client/pages/addsection.dart';
 import 'package:client/pages/all_sections.dart';
+import 'package:client/pages/delivry-adress.dart';
+import 'package:client/pages/life%20guard.dart';
 import 'package:client/pages/popular_sections.dart';
 import 'package:client/pages/profile.dart';
 import 'package:client/pages/saved_sections.dart';
@@ -13,7 +17,7 @@ import 'main_screen.dart';
 
 
 void main() => runApp(MaterialApp(
-    initialRoute: '/',
+    initialRoute: '/delivery_adress',
     routes: {
       '/': (context) => Loading(),
       '/main_screen': (context) => MainScreen(),
@@ -25,5 +29,10 @@ void main() => runApp(MaterialApp(
       '/sucessfull_order': (context) => OrderSucceful(),
       '/profile': (context) => Profile(),
       '/map': (context) => Map(),
+      '/signup': (context) => SignUp(),
+      '/life_guard': (context) => lifeguard(),
+      '/add_section': (context) => addsection(),
+      '/delivery_adress':(context) => deliveryAdress(),
+
     }
 ));

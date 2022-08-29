@@ -12,7 +12,7 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
-  void getData() async{
+  /*void getData() async{
     /*var url =
     Uri.http('192.168.11.102:5000', '/api/v1/users/', {'q': '{http}'});*/
 
@@ -35,12 +35,12 @@ class _LoadingState extends State<Loading> {
       print('Request failed with status: ${response.statusCode}.');
     }
 
-  }
+  }*/
 
   @override
   void initState() {
     super.initState();
-    getData();
+    //getData();
   }
 
   @override
