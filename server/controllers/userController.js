@@ -17,9 +17,10 @@ try{
     !password ||
     !role
 ) {
-    req.salva = { errorCode: "missing required values" }
+    res.status(404).send("missing required values");
+    /*req.salva = { errorCode: "missing required values" }
     next();
-    return;
+    return;*/
 }
 
 const conn= db.collection('users').doc();
@@ -95,9 +96,7 @@ const getUserById = asyncHandler(async (req, res, next) => {
             {
                 success: true,
                 operation: "getting user by id",
-                data: user
-                
-
+                data: user      
             }
         );
     } else {
