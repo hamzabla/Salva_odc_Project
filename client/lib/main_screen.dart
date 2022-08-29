@@ -1,6 +1,7 @@
 import 'package:client/pages/all_sections.dart';
 import 'package:client/pages/home.dart';
 import 'package:client/pages/popular_sections.dart';
+import 'package:client/pages/profile.dart';
 import 'package:client/pages/saved_sections.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
         color: Colors.white,
         animationDuration: Duration(milliseconds: 300),
       ),
+
       body: screen[selectedIndex],
     );
   }

@@ -1,4 +1,7 @@
+import 'package:client/pages/all_sections.dart';
 import 'package:flutter/material.dart';
+
+import '../main_screen.dart';
 
 class Menu extends StatelessWidget {
 
@@ -19,12 +22,15 @@ class Menu extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.dashboard),
               title: Text(
-                'ALL',
+                'HOME',
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
-                print('hey');
-              },
+                Navigator.push(
+                    context,
+                    // Create the SelectionScreen in the next step.
+                    MaterialPageRoute(builder: (context) => MainScreen()));
+              }
             ),
             ListTile(
               leading: Icon(Icons.star_border_outlined),

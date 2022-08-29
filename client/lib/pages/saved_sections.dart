@@ -73,7 +73,7 @@ class _SavedSectionsState extends State<SavedSections> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50),
+            margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50,right: 14),
             child: Column(
               children: [
                 Expanded(
@@ -112,8 +112,7 @@ class _SavedSectionsState extends State<SavedSections> {
 class SectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
+    return  Container(
         width: MediaQuery.of(context).size.width - 50.0,
         height: MediaQuery.of(context).size.height - 600.0,
         padding: EdgeInsets.all(2.0),
@@ -172,7 +171,6 @@ class SectionWidget extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }

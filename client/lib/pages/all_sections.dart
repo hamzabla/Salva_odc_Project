@@ -1,9 +1,11 @@
+import 'package:client/pages/section_details.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Widgets/BottomNavbar.dart';
 import '../Widgets/Menu.dart';
 import '../Widgets/SearchBar.dart';
+import '../main_screen.dart';
 
 class AllSections extends StatefulWidget {
 
@@ -91,7 +93,7 @@ class _AllSectionsState extends State<AllSections> {
             ],),
           ),
           Container(
-            margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50),
+            margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50,right: 14),
             child: Column(
               children: [
                 Expanded(
@@ -130,63 +132,65 @@ class _AllSectionsState extends State<AllSections> {
 class SectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return  InkWell(
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) =>  SectionDetails())),
       child: Container(
-        width: MediaQuery.of(context).size.width - 50.0,
-        height: MediaQuery.of(context).size.height - 600.0,
-        padding: EdgeInsets.all(2.0),
-        child: Card(
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
-          ),
-          elevation: 5,
-          child:  Container(
-            decoration:BoxDecoration(
-                image:  DecorationImage(
-                  image: NetworkImage('https://placeimg.com/640/480/nature'),
-                  fit: BoxFit.fill, )
+          width: MediaQuery.of(context).size.width - 50.0,
+          height: MediaQuery.of(context).size.height - 600.0,
+          padding: EdgeInsets.all(2.0),
+          child: Card(
+            semanticContainer: true,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
             ),
-            child: Container(
-              margin: EdgeInsets.only(top: 140,left: 15,),
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "beach harhoura",
-                    style: GoogleFonts.poppins(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xffFFFFFF),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_on_outlined,
+            elevation: 5,
+            child:  Container(
+              decoration:BoxDecoration(
+                  image:  DecorationImage(
+                    image: NetworkImage('https://placeimg.com/640/480/nature'),
+                    fit: BoxFit.fill, )
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 140,left: 15,),
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "beach harhoura",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                         color: Color(0xffFFFFFF),
-                        size: 12,
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text(
-                        'Hoceima, Morocco',
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
                           color: Color(0xffFFFFFF),
+                          size: 12,
                         ),
-                      )
-                    ],
-                  )
-                ],
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        Text(
+                          'Hoceima, Morocco',
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffFFFFFF),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
       ),
     );
   }

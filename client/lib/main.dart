@@ -13,7 +13,7 @@ import 'main_screen.dart';
 
 
 void main() => runApp(MaterialApp(
-    initialRoute: '/map',
+    initialRoute: '/',
     routes: {
       '/': (context) => Loading(),
       '/main_screen': (context) => MainScreen(),

@@ -120,11 +120,11 @@ class _ProfileState extends State<Profile> {
 
   Widget IconsWidgets() => Row(
         children: [
-          SizedBox(width: 50,),
+          SizedBox(width: 70,),
           Icon(
             FontAwesomeIcons.facebook,
             color: Color(0xff072983),
-            size: 35,
+            size: 30,
           ),
           SizedBox(
             width: 50,
@@ -132,7 +132,7 @@ class _ProfileState extends State<Profile> {
           Icon(
             FontAwesomeIcons.instagram,
             color: Color(0xff072983),
-            size: 35,
+            size: 30,
           ),
           SizedBox(
             width: 50,
@@ -140,7 +140,7 @@ class _ProfileState extends State<Profile> {
           Icon(
             FontAwesomeIcons.twitter,
             color: Color(0xff072983),
-            size: 35,
+            size: 30,
           ),
           SizedBox(
             width: 50,
@@ -148,7 +148,7 @@ class _ProfileState extends State<Profile> {
           Icon(
             FontAwesomeIcons.linkedin,
             color: Color(0xff072983),
-            size: 35,
+            size: 30,
           ),
         ],
       );
@@ -173,7 +173,7 @@ class _ProfileState extends State<Profile> {
 
   Widget Infos() => Container(
         width: 380,
-        height: 150,
+        height: 180,
         decoration: BoxDecoration(
           color: Color(0xff072983),
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -189,13 +189,13 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, top: 25.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 30.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.person_outline,
                     color: Color(0xffFFFFFF),
-                    size: 14,
+                    size: 20,
                   ),
                   SizedBox(
                     width: 10.0,
@@ -223,13 +223,13 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 15.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.phone_outlined,
                     color: Color(0xffFFFFFF),
-                    size: 14,
+                    size: 20,
                   ),
                   SizedBox(
                     width: 10.0,
@@ -257,13 +257,13 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 30.0, top: 10.0),
+              padding: const EdgeInsets.only(left: 30.0, top: 15.0),
               child: Row(
                 children: [
                   Icon(
                     Icons.email_outlined,
                     color: Color(0xffFFFFFF),
-                    size: 14,
+                    size: 20,
                   ),
                   SizedBox(
                     width: 10.0,

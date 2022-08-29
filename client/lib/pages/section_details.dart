@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../Widgets/BottomNavbar.dart';
 import '../Widgets/Menu.dart';
+import '../Widgets/buildButtons.dart';
 
 class SectionDetails extends StatefulWidget {
   @override
@@ -81,9 +83,14 @@ class _SectionDetailsState extends State<SectionDetails> {
         Reviews(),
           ],
       ),
+    bottomNavigationBar: NavBarWidget(),
     );
   }
 }
+
+
+
+
 
 Widget Reviews() {
 
@@ -317,12 +324,15 @@ Widget buildImage() {
       ));
 }
 
+
+/*
 Widget buildButtons() {
+  bool isFavorite = false;
   return Row(
     children: [
       InkWell(
         onTap: () {
-          print("Click event on Container");
+         print('fav');
         },
         child: Container(
           height: 50,
@@ -374,7 +384,7 @@ Widget buildButtons() {
       ),
     ],
   );
-}
+}*/
 
 Widget Tags() {
   return Padding(

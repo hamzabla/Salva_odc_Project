@@ -130,8 +130,7 @@ class _PopularSectionsState extends State<PopularSections> {
 class SectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
+    return  Container(
         width: MediaQuery.of(context).size.width - 50.0,
         height: MediaQuery.of(context).size.height - 600.0,
         padding: EdgeInsets.all(2.0),
@@ -187,7 +186,6 @@ class SectionWidget extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
