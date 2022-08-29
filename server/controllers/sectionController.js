@@ -90,20 +90,20 @@ const getSectionById = asyncHandler(async (req, res, next) => {
 
 });
 const getAllSections = asyncHandler(async (req, res, next) => {
-    let users = [];
+    let sections = [];
     const querySnapshot = await db.collection('sections').get();
     querySnapshot.forEach((doc) => {
-        let added= doc.data();
-        users.push(added) ;
+        let added= {id:doc.id, ...doc.data()};
+        sections.push(added) ;
 });
 
     res.status(200).json(
         {
             success: true,
             operation: "getting all sections ",
-            count: users.length,
-            data: {
-                users
+            count: sections.length,
+            data: { 
+                sections
             }
 
         }
