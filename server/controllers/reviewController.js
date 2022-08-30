@@ -5,12 +5,13 @@ const asyncHandler = require("express-async-handler");
 
 const addReview = asyncHandler(async(req,res,next)=>{
 try{
-  let {ReviewOwner,Body,rating} = req.body;
+  let {ReviewOwner,Body,rating,id_section} = req.body;
   console.log(req.body);
   if (
     !ReviewOwner ||
     !Body ||
-    !rating
+    !rating ||
+    !id_section
 ) {
     req.salva = { errorCode: "missing required values" }
     next();
@@ -20,13 +21,11 @@ try{
 const conn= db.collection('reviews').doc();
 
 
-
- 
-
  const review= await conn.set({
     ReviewOwner,
     Body,
-    rating
+    rating,
+    id_section
 });
 
 if (review) {
@@ -36,7 +35,8 @@ if (review) {
         data: {
             ReviewOwner,
             Body,
-            rating
+            rating,
+            id_section
         }
     });
 } else {
@@ -90,7 +90,7 @@ const getAllReviews = asyncHandler(async (req, res, next) => {
     let reviews = [];
     const querySnapshot = await db.collection('reviews').get();
     querySnapshot.forEach((doc) => {
-        let added= doc.data();
+        let added= {id:doc.id, ...doc.data()};
         reviews.push(added) ;
 });
 
@@ -178,11 +178,39 @@ const deleteReview = asyncHandler(async (req, res, next) => {
 });
 
 
+const getAllReviewsBySectionId = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    let reviews = [];
+    let added;
+    const querySnapshot = await db.collection('reviews').get();
+    querySnapshot.forEach((doc) => {
+        if(doc.data().id_section == id){
+            console.log(doc.data());
+            console.log(doc.data().id_section);
+        added= {id: doc.id, ...doc.data()};
+        reviews.push(added);
+        }
+});
+
+    res.status(200).json(
+        {
+            success: true,
+            operation: "getting all reviews by section id ",
+            count: reviews.length,
+            data: {
+                reviews
+            }
+
+        }
+    );
+});
+
 
 module.exports = {
     addReview,
     getReviewById,
     getAllReviews,
     updateReview,
-    deleteReview
+    deleteReview,
+    getAllReviewsBySectionId
 }
