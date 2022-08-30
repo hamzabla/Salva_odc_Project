@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:client/pages/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 import '../Widgets/buildButtons.dart';
+import '../config.dart';
 
 
 class SectionDetails extends StatefulWidget {
@@ -17,9 +20,11 @@ class _SectionDetailsState extends State<SectionDetails> {
   Map data ={};
 
   String id_section = "";
+  var review = TextEditingController();
+  var count = 0;
 
   insertReview() async {
-    var url = Uri.http('192.168.11.102:5000', '/api/v1/reviews/');
+    var url = Uri.http(Config.apiURL, Config.reveiwsAPI);
 
     Map<String,String> headers = {'Content-Type':'application/json'};
     final msg = jsonEncode({
@@ -37,7 +42,25 @@ class _SectionDetailsState extends State<SectionDetails> {
     return response;
   }
 
-  var review = TextEditingController();
+  //getingReviewsBysection
+  getingReviewsBysection() async {
+
+    var url = Uri.http(Config.apiURL, '/api/v1/reviews/section/${id_section}');
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      Map data = convert.jsonDecode(response.body);
+      this.count = data['count'];
+      return data['data']['reviews']!;
+    }
+    else {
+      return 'Request failed with status: ${response.statusCode}.';
+      //print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +70,7 @@ class _SectionDetailsState extends State<SectionDetails> {
      String stringlocation = '${data['adress']}';
 
      id_section = data['id'];
-
+     getingReviewsBysection();
      //split string
      var arr = stringTags.split(',');
      var arr2 = stringlocation.split(',');
@@ -55,42 +78,75 @@ class _SectionDetailsState extends State<SectionDetails> {
      print("${arr2} ///heey");
      print(data);*/
 
+
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       backgroundColor: Color(0xffF2F3F3),
-      /*appBar: AppBar(
-        backgroundColor: Color(0xffF2F3F3),
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black45,
-          ),
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
-        ),
-        leadingWidth: 25.5,
-        actions: [
-          IconButton(
-              onPressed: () {
-                print('notif');
-              },
-              icon: Icon(
-                Icons.notifications_none_outlined,
-                color: Colors.black45,
-                size: 25.0,
-              ))
-        ],
-      ),
-      drawer: Menu(),*/
       appBar: AppBar(
         title: const Text('Section details',
             style: TextStyle( color: Color(0xff073983),)),
         backgroundColor: Colors.white70,
       ),
-      body:  ListView(
+      body:  Container(
+        child: FutureBuilder(
+          future: getingReviewsBysection(),
+          builder: (context, snapshot){
+            if(snapshot.hasData){
+              print('${snapshot.data} here is the data');
+              return
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: 1,
+                  itemBuilder: (context,index){
+                    return Column(
+                      children: [
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: <Widget>[
+                            buildImage(),
+                            Positioned(top: 255, left: 280, child: buildButtons()),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Tags(arr),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Title(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Infos(arr2,count),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Description(),
+                        SizedBox(
+                          width: 20,
+                          height: 20,
+                        ),
+                        addReview(context,review),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        for(var i=0;i<count;i++)
+                          Reviews(snapshot.data,i),
+                      ],
+                    );
+                  },
+                );
+            } else { return Loading();}
+          },
+        ),
+      ),
+
+
+
+     /* ListView(
           children: [
             Stack(
               clipBehavior: Clip.none,
@@ -123,18 +179,41 @@ class _SectionDetailsState extends State<SectionDetails> {
             SizedBox(
               height: 20,
             ),
-            Reviews(),
-            Reviews(),
-        Reviews(),
+            Container(
+                width: 150,
+                height: 150,
+                child: FutureBuilder(
+                  future: getingReviewsBysection(),
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      print('${snapshot.data} here is the data');
+                      return /*Column(
+                        children: [
+                          for(var i=0;i<count;i++)
+                            Reviews(snapshot.data,i),
+                        ],
+                      );*/
+                      ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: count,
+                        itemBuilder: (context,index){
+                          return Reviews(snapshot.data,index);
+                        },
+                      );
+                    } else { return Loading();}
+                  },
+                ),
+              ),
+            //Reviews(data),
           ],
-      ),
+      ),*/
     //bottomNavigationBar: NavBarWidget(),
     );
   }
 
 
 
-  Widget Reviews() {
+  Widget Reviews(data,index) {
 
     return Padding(
       padding: const EdgeInsets.only(right: 25.0, left: 25.0,bottom: 10.0),
@@ -163,7 +242,7 @@ class _SectionDetailsState extends State<SectionDetails> {
                       width: 10,
                     ),
                     Text(
-                      'Ahmed.karimi',
+                      '${data[index]['ReviewOwner']}',
                       style: GoogleFonts.poppins(
                         fontSize: 10,
                         fontWeight: FontWeight.w300,
@@ -177,9 +256,10 @@ class _SectionDetailsState extends State<SectionDetails> {
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 30.0, right: 10.0,bottom: 15.0),
+                padding: const EdgeInsets.only(left: 15.0, right: 150.0,bottom: 15.0),
                 child: Text(
-                  'Very nice beach especially when the weather is calm and you can see families ..',
+                  '${data[index]['Body']}',
+                  textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
                     fontSize: 10,
                     fontWeight: FontWeight.w300,
@@ -193,8 +273,6 @@ class _SectionDetailsState extends State<SectionDetails> {
   }
 
   Widget addReview(BuildContext context, review) {
-
-
 
     return InkWell(
       onTap: () => showDialog(
@@ -220,35 +298,37 @@ class _SectionDetailsState extends State<SectionDetails> {
                   child: Text("Submit")),
             ],
           )),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 25.0,left: 25.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xff072983),
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 3,
-                offset: Offset(0, 2), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 15.0,top: 10.0,left: 14.0),
-            child: Text(
-              textAlign: TextAlign.left,
-              'add review...',
-              style: GoogleFonts.poppins(
-                fontSize: 10,
-                fontWeight: FontWeight.w300,
-                color: Color(0xffF2F3F3),
+
+        child: Padding(
+          padding: const EdgeInsets.only(right: 14.0,left: 14.0),
+          child: Container(
+            width: 370,
+            decoration: BoxDecoration(
+              color: Color(0xff072983),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                  offset: Offset(0, 2), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 15.0,top: 10.0,left: 14.0),
+              child: Text(
+                textAlign: TextAlign.left,
+                'add review...',
+                style: GoogleFonts.poppins(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w300,
+                  color: Color(0xffF2F3F3),
+                ),
               ),
             ),
           ),
         ),
-      ),
     );
   }
 
@@ -267,7 +347,7 @@ class _SectionDetailsState extends State<SectionDetails> {
     );
   }
 
-  Widget Infos(arr) {
+  Widget Infos(arr,count) {
     return Padding(
       padding: const EdgeInsets.only(
         right: 20.0,
@@ -306,7 +386,7 @@ class _SectionDetailsState extends State<SectionDetails> {
                 width: 5.0,
               ),
               Text(
-                '250 comments',
+                '${count} reviews',
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -343,7 +423,7 @@ class _SectionDetailsState extends State<SectionDetails> {
 
   Widget Title() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0),
+      padding: const EdgeInsets.only(right: 160.0),
       child: Text(
         '${data['title']}',
         style: GoogleFonts.poppins(

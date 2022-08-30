@@ -1,16 +1,16 @@
+import 'package:client/config.dart';
 import 'package:client/pages/addsection.dart';
 import 'package:client/pages/loading.dart';
-import 'package:client/pages/section_details.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import '../Widgets/BottomNavbar.dart';
 import '../Widgets/Menu.dart';
 import '../Widgets/SearchBar.dart';
-import '../main_screen.dart';
-import 'package:client/Models/Section.dart';
+
 
 
 class AllSections extends StatefulWidget {
@@ -20,8 +20,9 @@ class AllSections extends StatefulWidget {
 
 class _AllSectionsState extends State<AllSections> {
   var count = 0;
+
   getAllSections() async {
-    var url = Uri.http('192.168.11.102:5000', '/api/v1/sections/');
+    var url = Uri.http(Config.apiURL, Config.sectionAPI);
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
     if (response.statusCode == 200) {
