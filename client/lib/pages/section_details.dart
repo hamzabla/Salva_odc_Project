@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
-import '../Widgets/BottomNavbar.dart';
-import '../Widgets/Menu.dart';
 import '../Widgets/buildButtons.dart';
+
 
 class SectionDetails extends StatefulWidget {
   @override
@@ -14,6 +16,29 @@ class _SectionDetailsState extends State<SectionDetails> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   Map data ={};
 
+  String id_section = "";
+
+  insertReview() async {
+    var url = Uri.http('192.168.11.102:5000', '/api/v1/reviews/');
+
+    Map<String,String> headers = {'Content-Type':'application/json'};
+    final msg = jsonEncode({
+      "Body": review.text,
+      "ReviewOwner":"haitam.assadi",
+      "rating":"3",
+      "id_section": id_section
+    });
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.post(url,
+      body: msg,
+      headers: headers,
+    );
+    print(response.body);
+    return response;
+  }
+
+  var review = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -21,18 +46,20 @@ class _SectionDetailsState extends State<SectionDetails> {
      String stringTags = '${data['tags']}';
      String stringlocation = '${data['adress']}';
 
+     id_section = data['id'];
+
      //split string
      var arr = stringTags.split(',');
      var arr2 = stringlocation.split(',');
-     print("${arr} ///holaaaaa");
+     /*print("${arr} ///holaaaaa");
      print("${arr2} ///heey");
-     print(data);
+     print(data);*/
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       backgroundColor: Color(0xffF2F3F3),
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Color(0xffF2F3F3),
         elevation: 0,
         leading: IconButton(
@@ -57,7 +84,12 @@ class _SectionDetailsState extends State<SectionDetails> {
               ))
         ],
       ),
-      drawer: Menu(),
+      drawer: Menu(),*/
+      appBar: AppBar(
+        title: const Text('Section details',
+            style: TextStyle( color: Color(0xff073983),)),
+        backgroundColor: Colors.white70,
+      ),
       body:  ListView(
           children: [
             Stack(
@@ -87,7 +119,7 @@ class _SectionDetailsState extends State<SectionDetails> {
               width: 20,
               height: 20,
             ),
-            addReview(context),
+            addReview(context,review),
             SizedBox(
               height: 20,
             ),
@@ -160,13 +192,33 @@ class _SectionDetailsState extends State<SectionDetails> {
     );
   }
 
-  Widget addReview(BuildContext context) {
+  Widget addReview(BuildContext context, review) {
+
+
+
     return InkWell(
       onTap: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Title'),
-            content: Text('test test test test'),
+            title: Text('Your Name'),
+            content: TextFormField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: "add review here ..."),
+              validator: (value){
+              if(value == null){
+                return "add review ";
+              }
+              return null;
+            },
+              controller: review,
+            ),
+            actions: [
+              TextButton(onPressed:(){
+                insertReview();
+                Navigator.of(context).pop(review.text);
+                },
+                  child: Text("Submit")),
+            ],
           )),
       child: Padding(
         padding: const EdgeInsets.only(right: 25.0,left: 25.0),

@@ -1,3 +1,4 @@
+import 'package:client/pages/addsection.dart';
 import 'package:client/pages/loading.dart';
 import 'package:client/pages/section_details.dart';
 import 'package:flutter/material.dart';
@@ -122,8 +123,13 @@ class _AllSectionsState extends State<AllSections> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                         ))),
-                    onPressed: () => null),
-              ],
+                    onPressed: () {
+                    //Navigator.pushNamed(context, "/add_section")// ),
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => addsection()));
+                    }
+                )],
             ),
           ),
           Container(
@@ -152,11 +158,12 @@ class _AllSectionsState extends State<AllSections> {
     return InkWell(
       onTap: () => Navigator.pushNamed(
           context, "/section_details", arguments: {
-          'title': data[index]["Title"],
-          'tags': data[index]["Tags"],
-          'picture': data[index]["Picture"],
+        'title': data[index]["Title"],
+        'tags': data[index]["Tags"],
+        'picture': data[index]["Picture"],
         'adress': data[index]["Adress"],
         'description': data[index]["Description"],
+        'id': data[index]["id"],
       }),
       child: Container(
         width: MediaQuery.of(context).size.width - 50.0,

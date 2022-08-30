@@ -17,7 +17,7 @@ import 'main_screen.dart';
 
 
 void main() => runApp(MaterialApp(
-    initialRoute: '/delivery_adress',
+    initialRoute: '/main_screen',
     routes: {
       '/': (context) => Loading(),
       '/main_screen': (context) => MainScreen(),
