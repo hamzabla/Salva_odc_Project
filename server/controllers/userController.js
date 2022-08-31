@@ -88,7 +88,7 @@ const getUserById = asyncHandler(async (req, res, next) => {
     const querySnapshot = await db.collection('users').get();
     querySnapshot.forEach((doc) => {
     if(doc.id ===  id) {
-        user = doc.data();
+        user = {id: doc.id,...doc.data()};
     }
 });
     if (user) {
@@ -111,7 +111,7 @@ const getAllUsers = asyncHandler(async (req, res, next) => {
     let users = [];
     const querySnapshot = await db.collection('users').get();
     querySnapshot.forEach((doc) => {
-        let added= doc.data();
+        let added= {id: doc.id, ...doc.data()};
         users.push(added) ;
 });
 

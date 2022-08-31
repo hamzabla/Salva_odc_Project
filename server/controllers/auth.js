@@ -20,6 +20,7 @@ const register = asyncHandler(async (req,res,next) =>{
         !role
     ) {
         res.status(404).send("missing required values");
+        return;
     }
 
     
@@ -35,6 +36,7 @@ querySnapshot.forEach((doc) => {
 });
 if (exist){
     res.status(404).send("Account already exist!"); 
+    return;
 }
 
  // Hash password
@@ -65,6 +67,7 @@ if (user) {
     });
 } else {
     res.status(404).send('invalid user data');
+    return;
 }
 });
 
@@ -78,7 +81,7 @@ const login = asyncHandler(async (req, res, next) => {
     const querySnapshot = await conn.get();
     querySnapshot.forEach((doc) => {
         if(doc.data().userName ===  userName) {
-          user = doc.data();
+          user = {id: doc.id,...doc.data(),token: generateToken(userName)};
         }
     });
    
@@ -88,15 +91,13 @@ const login = asyncHandler(async (req, res, next) => {
           success: true,
           operation: "login",
           data:{
-          name: user.name,
-          username: user.username,
-          email: user.email,
-          token: generateToken(user.username),
-    }
+               user
+              }
   });
       
     } else {
     res.status(404).send('invalid user creds');
+    return;
     }
   });
 
@@ -108,7 +109,7 @@ const login = asyncHandler(async (req, res, next) => {
     const querySnapshot = await conn.get();
     querySnapshot.forEach((doc) => {
         if(doc.data().userName ===  userName) {
-          user = doc.data();
+          user = {id: doc.id,...doc.data(), token: null};
         }
     });
    
@@ -118,12 +119,13 @@ const login = asyncHandler(async (req, res, next) => {
           success: true,
           operation: "logout",
           data:{
-          token: null,
-    }
+          user
+        }
   });
       
     } else {
     res.status(404).send('user did not logout');
+    return;
     }
   });
 
