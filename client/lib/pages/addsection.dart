@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:client/config.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,7 @@ class _addsectionState extends State<addsection> {
   var picture = TextEditingController();
 
   insertSection() async {
-    var url = Uri.http('192.168.11.102:5000', '/api/v1/sections/');
+    var url = Uri.http(Config.apiURL, Config.sectionAPI);
 
     Map<String,String> headers = {'Content-Type':'application/json'};
     final msg = jsonEncode({

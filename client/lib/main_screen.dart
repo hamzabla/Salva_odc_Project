@@ -17,9 +17,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final screen = [
     Home(),
-    PopularSections(),
-    SavedSections(),
     AllSections(),
+    SavedSections(),
+    Profile(),
   ];
 
   @override

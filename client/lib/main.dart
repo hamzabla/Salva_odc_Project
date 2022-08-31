@@ -1,3 +1,4 @@
+import 'package:client/pages/Login.dart';
 import 'package:client/pages/SignUp.dart';
 import 'package:client/pages/addsection.dart';
 import 'package:client/pages/all_sections.dart';
@@ -17,7 +18,7 @@ import 'main_screen.dart';
 
 
 void main() => runApp(MaterialApp(
-    initialRoute: '/main_screen',
+    initialRoute: '/login',
     routes: {
       '/': (context) => Loading(),
       '/main_screen': (context) => MainScreen(),
@@ -33,6 +34,7 @@ void main() => runApp(MaterialApp(
       '/life_guard': (context) => lifeguard(),
       '/add_section': (context) => addsection(),
       '/delivery_adress':(context) => deliveryAdress(),
+      '/login':(context) => SignIn(),
 
     }
 ));

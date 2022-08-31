@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:client/pages/loading.dart';
+import 'package:client/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,7 @@ class _SectionDetailsState extends State<SectionDetails> {
     Map<String,String> headers = {'Content-Type':'application/json'};
     final msg = jsonEncode({
       "Body": review.text,
-      "ReviewOwner":"haitam.assadi",
+      "ReviewOwner": currentUser['userName'],
       "rating":"3",
       "id_section": id_section
     });
@@ -60,8 +61,6 @@ class _SectionDetailsState extends State<SectionDetails> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -74,10 +73,6 @@ class _SectionDetailsState extends State<SectionDetails> {
      //split string
      var arr = stringTags.split(',');
      var arr2 = stringlocation.split(',');
-     /*print("${arr} ///holaaaaa");
-     print("${arr2} ///heey");
-     print(data);*/
-
 
 
     return Scaffold(
@@ -267,6 +262,12 @@ class _SectionDetailsState extends State<SectionDetails> {
                   ),
                 ),
               ),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {  },),
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {  },),
             ]),
       ),
     );
@@ -278,7 +279,7 @@ class _SectionDetailsState extends State<SectionDetails> {
       onTap: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Your Name'),
+            title: Text('Your review matter'),
             content: TextFormField(
               autofocus: true,
               decoration: InputDecoration(hintText: "add review here ..."),
