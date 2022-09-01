@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:client/variables.dart';
+import 'package:client/api_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import '../Models/login_response_model.dart';
 import '../config.dart';
+import '../shared_services.dart';
 import 'constants.dart';
 
 class SignIn extends StatefulWidget {
@@ -36,12 +38,19 @@ class _SignInState extends State<SignIn> {
       body: msg,
       headers: headers,
     );
+    print("${response.body} this is response.body in loggin");
     Map data = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
-    currentUser = data['data']['user'];
+    //currentUser = data['data']['user'];
+    await SharedService.setLoginDetails( loginResponseJson(
+      response.body,
+    ),
+      //response.body,
+    );
+    return true;
     }
 
-    return data["success"];
+    return false;
   }
 
   @override
@@ -183,11 +192,11 @@ class _SignInState extends State<SignIn> {
                                   ))),
                               onPressed: () {
                                 void submit() async {
-                                  final logged = await loginUser();
+                                  bool logged = await loginUser();
                                   if(logged){
                                     Navigator.of(context).pushNamedAndRemoveUntil("/main_screen",(route) => false);}
                                   else{
-                                    print('invlaid user creds');
+                                    print("nooooooooooooooooooo");
                                   }
                                 }
                                 return submit();

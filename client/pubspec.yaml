@@ -47,6 +47,7 @@ dependencies:
   dropdown_button2: ^1.7.2
   image_picker: ^0.8.5+3
   datetime_picker_formfield: ^2.0.1
+  api_cache_manager: ^1.0.2
 
 dev_dependencies:
   flutter_test:

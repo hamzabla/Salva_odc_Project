@@ -1,33 +1,18 @@
 import 'dart:convert';
 
 import 'package:client/pages/all_sections.dart';
-import 'package:client/variables.dart';
+import 'package:client/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import '../config.dart';
 import '../main_screen.dart';
+import '../shared_services.dart';
 
 class Menu extends StatelessWidget {
 
-  logoutUser() async {
-    var url = Uri.http(Config.apiURL, "${Config.authAPI}logout");
 
-    Map<String,String> headers = {'Content-Type':'application/json'};
-
-    final msg = jsonEncode({
-      "userName": currentUser['userName'],
-    });
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.post(url,
-      body: msg,
-      headers: headers,
-    );
-    Map data = convert.jsonDecode(response.body);
-
-    return data;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +73,7 @@ class Menu extends StatelessWidget {
               leading: Icon(Icons.logout),
               title: InkWell(
                 onTap: (){
-                  logoutUser();
-                  Navigator.of(context).pushNamedAndRemoveUntil("/login",(route) => false);
+                  SharedService.logout(context);
                 },
                 child: Text(
                   'LOGOUT',

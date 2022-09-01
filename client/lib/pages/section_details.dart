@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:client/pages/loading.dart';
-import 'package:client/variables.dart';
+import 'package:client/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +30,7 @@ class _SectionDetailsState extends State<SectionDetails> {
     Map<String,String> headers = {'Content-Type':'application/json'};
     final msg = jsonEncode({
       "Body": review.text,
-      "ReviewOwner": currentUser['userName'],
+      "ReviewOwner": "currentUser['userName']",
       "rating":"3",
       "id_section": id_section
     });
@@ -89,7 +89,7 @@ class _SectionDetailsState extends State<SectionDetails> {
           future: getingReviewsBysection(),
           builder: (context, snapshot){
             if(snapshot.hasData){
-              print('${snapshot.data} here is the data');
+              //print('${snapshot.data} data ins section_details ');
               return
                 ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -262,16 +262,80 @@ class _SectionDetailsState extends State<SectionDetails> {
                   ),
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () {  },),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {  },),
+             Modifications(data,index),
             ]),
       ),
     );
+
+
   }
+
+
+  Widget Modifications(data,index) {
+    return Container(
+      child: FutureBuilder(
+        future: APIServices.getUserProfile(),
+        builder: (
+            context,
+            model,
+            ) {
+          if (model.hasData) {
+            print("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            String inAndout = convert.jsonEncode(model.data);
+            Map currentUser = convert.jsonDecode(inAndout);
+            print('${currentUser['data']['userName']} the currentUser is here');
+            if(currentUser['data']['userName'] == data[index]['ReviewOwner'])
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.edit,color: Color(0xffF2F3F3),),
+                  onPressed: () {  },),
+                IconButton(
+                  icon: Icon(Icons.delete,color: Color(0xffF2F3F3),),
+                  onPressed: () {  },)
+              ],);
+            else{
+              print('whyyyyyyyyy');
+              return Container();
+            }
+            //return Center(child: Text(model.data!));
+          }
+          print('whyyyyyyyyy 222');
+          return  Center();
+        },
+      ),
+    );
+  }
+
+
+ /* Widget Modifications(data,index){
+String currentUsername="";
+
+    void currentUser() async {
+      print('holaaaa');
+      Map logged = await APIServices.getUserProfile();
+      print("${logged['data']} logged in section details");
+      currentUsername = logged['data']['userName'];
+    }
+    print("$currentUsername before");
+    currentUser();
+print("$currentUsername after");
+    if(currentUsername == data[index]['ReviewOwner'])
+    return  Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+      IconButton(
+        icon: Icon(Icons.edit,color: Color(0xffF2F3F3),),
+        onPressed: () {  },),
+      IconButton(
+        icon: Icon(Icons.delete,color: Color(0xffF2F3F3),),
+        onPressed: () {  },)
+    ],);
+    else{
+      return Container();
+    }
+  }*/
 
   Widget addReview(BuildContext context, review) {
 

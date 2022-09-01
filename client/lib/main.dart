@@ -9,6 +9,7 @@ import 'package:client/pages/profile.dart';
 import 'package:client/pages/saved_sections.dart';
 import 'package:client/pages/section_details.dart';
 import 'package:client/pages/sucessfull_order.dart';
+import 'package:client/shared_services.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/home.dart';
 import 'package:client/pages/loading.dart';
@@ -16,9 +17,20 @@ import 'package:client/pages/map.dart';
 
 import 'main_screen.dart';
 
+String _defaultHome = '/login';
 
-void main() => runApp(MaterialApp(
-    initialRoute: '/login',
+
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+      bool _result = await SharedService.isLoggedIn();
+      if (_result) {
+            _defaultHome =  '/main_screen';
+      }
+ runApp(MaterialApp(
+    initialRoute: _defaultHome,
     routes: {
       '/': (context) => Loading(),
       '/main_screen': (context) => MainScreen(),
@@ -38,3 +50,4 @@ void main() => runApp(MaterialApp(
 
     }
 ));
+}
