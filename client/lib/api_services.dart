@@ -1,2 +1,3 @@
 // global variables
 var currentUser;
+

@@ -88,11 +88,11 @@ const login = asyncHandler(async (req, res, next) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       
         res.json({
-          success: true,
+          success: "true",
           operation: "login",
-          data:{
+          data:
                user
-              }
+              
   });
       
     } else {
