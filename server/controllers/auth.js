@@ -101,33 +101,7 @@ const login = asyncHandler(async (req, res, next) => {
     }
   });
 
-  const logout = asyncHandler(async (req, res, next) => {
-    const { userName } = req.body;
-    // Check for user userName
-    const conn= db.collection('users');
-    let user ='';
-    const querySnapshot = await conn.get();
-    querySnapshot.forEach((doc) => {
-        if(doc.data().userName ===  userName) {
-          user = {id: doc.id,...doc.data(), token: null};
-        }
-    });
-   
-    if (user) {
-      
-        res.json({
-          success: true,
-          operation: "logout",
-          data:{
-          user
-        }
-  });
-      
-    } else {
-    res.status(404).send('user did not logout');
-    return;
-    }
-  });
+
 
 // Generate JWT
 const generateToken = (userName) => {
@@ -141,6 +115,6 @@ const generateToken = (userName) => {
 module.exports = {
     register,
     login,
-    logout
+ 
   };
   
