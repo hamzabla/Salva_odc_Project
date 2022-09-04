@@ -46,7 +46,6 @@ class _SavedSectionsState extends State<SavedSections> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getAllInterestByUser();
   }
 
 

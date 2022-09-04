@@ -23,7 +23,7 @@ class _SignUpState extends State<SignUp> {
   var username = TextEditingController();
   var email = TextEditingController();
   var description = TextEditingController();
-  String role = '';
+  String role = 'simple';
   var phone = TextEditingController();
   var fullname = TextEditingController();
 
@@ -335,6 +335,7 @@ class _SignUpState extends State<SignUp> {
                           ],
                         ),
                         SizedBox(height: 10),
+                        if(role=="simple")
                         OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 44, vertical: 12),
@@ -352,6 +353,30 @@ class _SignUpState extends State<SignUp> {
                             Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);
                           },
                         ),
+                        if(role=="lifguard")
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(horizontal: 44, vertical: 12),
+                              minimumSize: Size(160, 20),
+                              primary: Colors.white,
+                              side: BorderSide(width: 1, color: Colors.white),
+                            ),
+                            child: Text('Next',
+                                style: (GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                ))),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed("/life_guard", arguments: {
+                                'username': username.text,
+                                "email": email.text,
+                                "phone": phone.text,
+                                "password": password,
+                                "role": role,
+                                "fullName":fullname.text
+                              });
+                            },
+                          ),
                       ],)),
 
                   SizedBox(height: 20),

@@ -29,8 +29,7 @@ class _lifeguardState extends State<lifeguard> {
                 child: Column(
                   children: [
                     SizedBox(height: 50),
-                    Image.asset("assets/logo_sans_bg.png",
-                        height: 80, width: 72),
+                    Image.network("https://firebasestorage.googleapis.com/v0/b/salva-f47c9.appspot.com/o/logo_sans_bg.png?alt=media&token=e099926b-bddd-415e-ad7c-9b8e2fbd78a2" , height: 80,width: 72,),
                     SizedBox(height: 1),
                     Text(
                       "Salva",
