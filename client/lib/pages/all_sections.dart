@@ -4,6 +4,7 @@ import 'package:client/pages/addsection.dart';
 import 'package:client/pages/loading.dart';
 
 
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -16,19 +17,23 @@ import '../shared_services.dart';
 
 
 class AllSections extends StatefulWidget {
+
   @override
   _AllSectionsState createState() => _AllSectionsState();
+
 }
 
 class _AllSectionsState extends State<AllSections> {
   var count = 0;
-
-
+  var current;
 
   getAllSections() async {
     var url = Uri.http(Config.apiURL, Config.sectionAPI);
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
+
+    current = await APIServices.getUserProfile();
+    //print("${current['data']} hani");
     if (response.statusCode == 200) {
       //print(response.body);
       Map data = convert.jsonDecode(response.body);
@@ -42,6 +47,8 @@ class _AllSectionsState extends State<AllSections> {
       //print('Request failed with status: ${response.statusCode}.');
     }
   }
+
+
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -169,6 +176,7 @@ class _AllSectionsState extends State<AllSections> {
         'adress': data[index]["Adress"],
         'description': data[index]["Description"],
         'id': data[index]["id"],
+        'current': current,
       }),
       child: Container(
         width: MediaQuery.of(context).size.width - 50.0,

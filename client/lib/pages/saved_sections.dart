@@ -4,6 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Widgets/BottomNavbar.dart';
 import '../Widgets/Menu.dart';
 import '../Widgets/SearchBar.dart';
+import '../api_services.dart';
+import '../config.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+
+import 'loading.dart';
 
 class SavedSections extends StatefulWidget {
   @override
@@ -11,6 +17,40 @@ class SavedSections extends StatefulWidget {
 }
 
 class _SavedSectionsState extends State<SavedSections> {
+  var countSaved = 0;
+  var current;
+
+  getAllInterestByUser() async {
+    current = await APIServices.getUserProfile();
+    var user_id=current['data']['id'];
+    var url = Uri.http(Config.apiURL, "${Config.interestAPI}user/${user_id}");
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+
+    //print("${current['data']} hani");
+    if (response.statusCode == 200) {
+      Map data = convert.jsonDecode(response.body);
+      countSaved= data['countSaved'];
+      print("${countSaved} saved number in getAllInterestByUser");
+      print("${data['data']} data in getAllInterestByUser");
+      return data['data']!;
+
+    }
+    else {
+      return 'Request failed with status: ${response.statusCode}.';
+      //print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAllInterestByUser();
+  }
+
+
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -74,45 +114,41 @@ class _SavedSectionsState extends State<SavedSections> {
           ),
           Container(
             margin: EdgeInsets.only(left: 14, top: 180, bottom: 0.50,right: 14),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      SectionWidget(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      SectionWidget(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      SectionWidget(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      SectionWidget(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      SectionWidget(),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+                  child: FutureBuilder(
+                    future: getAllInterestByUser(),
+                    builder: (context, snapshot){
+                      if(snapshot.data != null){
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: countSaved,
+                          itemBuilder: (context,index){
+                            return SectionWidget(snapshot.data,index);
+                          },
+                        );
+                      } else { return Loading();}
+                    },
+                  )),
         ],
       ),
     );
   }
-}
 
-class SectionWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return  Container(
+
+
+  Widget SectionWidget(data,index) {
+
+    return  InkWell(
+      onTap: () => Navigator.pushNamed(
+          context, "/section_details", arguments: {
+        'title': data[index]["Title"],
+        'tags': data[index]["Tags"],
+        'picture': data[index]["Picture"],
+        'adress': data[index]["Adress"],
+        'description': data[index]["Description"],
+        'id': data[index]["id_section"],
+        'current': current,
+      }),
+      child: Container(
         width: MediaQuery.of(context).size.width - 50.0,
         height: MediaQuery.of(context).size.height - 600.0,
         padding: EdgeInsets.all(2.0),
@@ -126,9 +162,9 @@ class SectionWidget extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-              image: NetworkImage('https://placeimg.com/640/480/nature'),
-              fit: BoxFit.fill,
-            )),
+                  image: NetworkImage('https://placeimg.com/640/480/nature'),
+                  fit: BoxFit.fill,
+                )),
             child: Container(
               margin: EdgeInsets.only(
                 top: 140,
@@ -139,7 +175,7 @@ class SectionWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "beach harhoura",
+                    "${data[index]["Title"]}",
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -157,7 +193,7 @@ class SectionWidget extends StatelessWidget {
                         width: 10.0,
                       ),
                       Text(
-                        'Hoceima, Morocco',
+                        '${data[index]["Adress"]}',
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -171,6 +207,10 @@ class SectionWidget extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
   }
+
+
 }
+

@@ -1,6 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
+import '../config.dart';
 
 class buildButtons extends StatefulWidget {
+  late  String liked;
+  late String saved;
+  late String user_id;
+  late String section_id;
+   buildButtons(this.liked,this.saved, this.user_id,this.section_id);
 
   @override
   _buildButtonsState createState() => _buildButtonsState();
@@ -8,16 +18,68 @@ class buildButtons extends StatefulWidget {
 
 class _buildButtonsState extends State<buildButtons> {
 
-  bool isFavorite = false;
-  bool isSaved = false;
+  interestsUser() async {
+    var url = Uri.http(Config.apiURL, "${Config.interestAPI}check/${widget.user_id}${widget.section_id}");
+
+    Map<String,String> headers = {'Content-Type':'application/json'};
+    final msg = jsonEncode({
+      "id_user": widget.user_id,
+      "id_section": widget.section_id,
+      "like": widget.liked,
+      "save": widget.saved
+    });
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.post(url,
+      body: msg,
+      headers: headers,
+    );
+    print("${response.body} response.body in interests");
+    return response;
+  }
+
+
+  /*getInterestById() async {
+    var url = Uri.http(Config.apiURL, "${Config.interestAPI}${widget.user_id}${widget.section_id}");
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+
+    //print("${current['data']} hani");
+    if (response.statusCode == 200) {
+      Map data = convert.jsonDecode(response.body);
+      widget.liked= data["data"]["like"];
+      widget.saved =data["data"]["save"];
+      return data['data']!;
+
+    }
+    else {
+      return 'Request failed with status: ${response.statusCode}.';
+      //print('Request failed with status: ${response.statusCode}.');
+    }
+  }*/
+
+
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
+
+
+     print("${widget.liked}");
+    bool isFavorite = (widget.liked=="0") ? false : true;
+    bool isSaved = (widget.saved=="0") ? false : true;
+
     return Row(
       children: [
         InkWell(
           onTap: () {
             isFavorite = !isFavorite;
             setState(() {
+              if(isFavorite){
+                widget.liked="1";
+                interestsUser();
+              }else{
+                widget.liked="0";
+                interestsUser();
+              }
             });
           },
           child: Container(
@@ -49,7 +111,15 @@ class _buildButtonsState extends State<buildButtons> {
         InkWell(
           onTap: () {
             isSaved = !isSaved;
-            setState(() { });
+            setState(() {
+              if(isSaved){
+                widget.saved="1";
+                interestsUser();
+              }else{
+                widget.saved="0";
+                interestsUser();
+              }
+            });
     },
           child: Container(
             height: 50,

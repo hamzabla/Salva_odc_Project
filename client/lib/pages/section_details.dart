@@ -21,8 +21,11 @@ class _SectionDetailsState extends State<SectionDetails> {
   Map data ={};
 
   String id_section = "";
+  var currentUser;
   var review = TextEditingController();
   var count = 0;
+  String liked = "0";
+  String saved = "0";
 
   insertReview() async {
     var url = Uri.http(Config.apiURL, Config.reveiwsAPI);
@@ -30,7 +33,7 @@ class _SectionDetailsState extends State<SectionDetails> {
     Map<String,String> headers = {'Content-Type':'application/json'};
     final msg = jsonEncode({
       "Body": review.text,
-      "ReviewOwner": "currentUser['userName']",
+      "ReviewOwner": currentUser['data']['userName'],
       "rating":"3",
       "id_section": id_section
     });
@@ -39,12 +42,15 @@ class _SectionDetailsState extends State<SectionDetails> {
       body: msg,
       headers: headers,
     );
-    print(response.body);
+    //print(response.body);
     return response;
   }
 
+
+
   //getingReviewsBysection
   getingReviewsBysection() async {
+    await getInterestById();
 
     var url = Uri.http(Config.apiURL, '/api/v1/reviews/section/${id_section}');
     var response = await http.get(url);
@@ -60,6 +66,26 @@ class _SectionDetailsState extends State<SectionDetails> {
     }
   }
 
+  getInterestById() async {
+    var user_id=currentUser['data']['id'];
+    var section_id= id_section;
+    var url = Uri.http(Config.apiURL, "${Config.interestAPI}${user_id}${section_id}");
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+
+    //print("${current['data']} hani");
+    if (response.statusCode == 200) {
+      Map data = convert.jsonDecode(response.body);
+      liked= data["data"]["like"];
+      saved =data["data"]["save"];
+      return data['data']!;
+
+    }
+    else {
+      return 'Request failed with status: ${response.statusCode}.';
+      //print('Request failed with status: ${response.statusCode}.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +95,13 @@ class _SectionDetailsState extends State<SectionDetails> {
      String stringlocation = '${data['adress']}';
 
      id_section = data['id'];
-     getingReviewsBysection();
+     currentUser=data['current'];
+
      //split string
      var arr = stringTags.split(',');
      var arr2 = stringlocation.split(',');
+
+
 
 
     return Scaffold(
@@ -101,7 +130,7 @@ class _SectionDetailsState extends State<SectionDetails> {
                           clipBehavior: Clip.none,
                           children: <Widget>[
                             buildImage(),
-                            Positioned(top: 255, left: 280, child: buildButtons()),
+                            Positioned(top: 255, left: 280, child: buildButtons(liked,saved,currentUser['data']['id'],id_section)),
                           ],
                         ),
                         SizedBox(
@@ -139,72 +168,16 @@ class _SectionDetailsState extends State<SectionDetails> {
         ),
       ),
 
-
-
-     /* ListView(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                buildImage(),
-                Positioned(top: 255, left: 280, child: buildButtons()),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Tags(arr),
-            SizedBox(
-              height: 20,
-            ),
-            Title(),
-            SizedBox(
-              height: 20,
-            ),
-            Infos(arr2),
-            SizedBox(
-              height: 20,
-            ),
-            Description(),
-            SizedBox(
-              width: 20,
-              height: 20,
-            ),
-            addReview(context,review),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-                width: 150,
-                height: 150,
-                child: FutureBuilder(
-                  future: getingReviewsBysection(),
-                  builder: (context, snapshot){
-                    if(snapshot.hasData){
-                      print('${snapshot.data} here is the data');
-                      return /*Column(
-                        children: [
-                          for(var i=0;i<count;i++)
-                            Reviews(snapshot.data,i),
-                        ],
-                      );*/
-                      ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: count,
-                        itemBuilder: (context,index){
-                          return Reviews(snapshot.data,index);
-                        },
-                      );
-                    } else { return Loading();}
-                  },
-                ),
-              ),
-            //Reviews(data),
-          ],
-      ),*/
-    //bottomNavigationBar: NavBarWidget(),
     );
+
+
   }
+
+
+
+
+
+
 
 
 
@@ -272,20 +245,9 @@ class _SectionDetailsState extends State<SectionDetails> {
 
 
   Widget Modifications(data,index) {
-    return Container(
-      child: FutureBuilder(
-        future: APIServices.getUserProfile(),
-        builder: (
-            context,
-            model,
-            ) {
-          if (model.hasData) {
-            print("holaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            String inAndout = convert.jsonEncode(model.data);
-            Map currentUser = convert.jsonDecode(inAndout);
-            print('${currentUser['data']['userName']} the currentUser is here');
-            if(currentUser['data']['userName'] == data[index]['ReviewOwner'])
-            return Row(
+
+    if(currentUser['data']['userName']==data[index]['ReviewOwner'])
+           return  Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 IconButton(
@@ -295,47 +257,12 @@ class _SectionDetailsState extends State<SectionDetails> {
                   icon: Icon(Icons.delete,color: Color(0xffF2F3F3),),
                   onPressed: () {  },)
               ],);
-            else{
-              print('whyyyyyyyyy');
-              return Container();
-            }
-            //return Center(child: Text(model.data!));
-          }
-          print('whyyyyyyyyy 222');
-          return  Center();
-        },
-      ),
-    );
-  }
-
-
- /* Widget Modifications(data,index){
-String currentUsername="";
-
-    void currentUser() async {
-      print('holaaaa');
-      Map logged = await APIServices.getUserProfile();
-      print("${logged['data']} logged in section details");
-      currentUsername = logged['data']['userName'];
-    }
-    print("$currentUsername before");
-    currentUser();
-print("$currentUsername after");
-    if(currentUsername == data[index]['ReviewOwner'])
-    return  Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-      IconButton(
-        icon: Icon(Icons.edit,color: Color(0xffF2F3F3),),
-        onPressed: () {  },),
-      IconButton(
-        icon: Icon(Icons.delete,color: Color(0xffF2F3F3),),
-        onPressed: () {  },)
-    ],);
     else{
       return Container();
-    }
-  }*/
+  }}
+
+
+
 
   Widget addReview(BuildContext context, review) {
 
@@ -357,8 +284,12 @@ print("$currentUsername after");
             ),
             actions: [
               TextButton(onPressed:(){
-                insertReview();
-                Navigator.of(context).pop(review.text);
+                if(!review.toString().isEmpty){
+                  insertReview();
+                  Navigator.of(context).pop(review.text);
+                  Navigator.pushReplacementNamed(context, "/all_sections");
+                }
+
                 },
                   child: Text("Submit")),
             ],

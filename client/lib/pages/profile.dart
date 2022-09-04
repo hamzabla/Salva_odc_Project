@@ -1,3 +1,5 @@
+import 'package:client/api_services.dart';
+import 'package:client/pages/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,46 +48,58 @@ class _ProfileState extends State<Profile> {
         ],
       ),
       drawer: Menu(),
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            alignment: Alignment.center,
-            children: [
-              buildCoverImage(),
-              Positioned(top: top, child: buildProfileImage()),
-            ],
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          Infos(),
-          SizedBox(
-            height: 30,
-          ),
-          Text(
-            'Other ways to find us',
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xff072983),
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Divider(
-            color: Color(0xff8C7A7A),
-          ),
-          SizedBox(height: 12,),
-          IconsWidgets(),
-          SizedBox(height: 12,),
-          Divider(
-            color: Color(0xff8C7A7A),
-          ),
-          SizedBox(height: 12,),
-          HelpWidgets(),
-        ],
+      body: Container(
+        child: FutureBuilder(
+          future: APIServices.getUserProfile(),
+          builder: (context,snapshot){
+            if(snapshot.data != null){
+            return  Column(
+              children: [
+                Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    buildCoverImage(),
+                    Positioned(top: top, child: buildProfileImage()),
+                  ],
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+                Infos(snapshot.data),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Other ways to find us',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff072983),
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Divider(
+                  color: Color(0xff8C7A7A),
+                ),
+                SizedBox(height: 12,),
+                IconsWidgets(),
+                SizedBox(height: 12,),
+                Divider(
+                  color: Color(0xff8C7A7A),
+                ),
+                SizedBox(height: 12,),
+                HelpWidgets(),
+              ],
+            );}
+            else{
+              return Loading();
+            }
+          },
+        ),
+
       ),
     );
   }
@@ -171,7 +185,7 @@ class _ProfileState extends State<Profile> {
         ),
       );
 
-  Widget Infos() => Container(
+  Widget Infos(data) => Container(
         width: 380,
         height: 180,
         decoration: BoxDecoration(
@@ -212,7 +226,7 @@ class _ProfileState extends State<Profile> {
                     width: 10.0,
                   ),
                   Text(
-                    'Ahmed.karimi',
+                    '${data['data']['userName']}',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
@@ -246,7 +260,7 @@ class _ProfileState extends State<Profile> {
                     width: 10.0,
                   ),
                   Text(
-                    '+245 6554788',
+                    '${data['data']['phone']}',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
@@ -280,7 +294,7 @@ class _ProfileState extends State<Profile> {
                     width: 10.0,
                   ),
                   Text(
-                    'ahmed.karmi@gmail.com',
+                    '${data['data']['email']}',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
