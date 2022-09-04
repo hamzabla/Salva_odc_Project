@@ -134,13 +134,15 @@ const getAllInterestsByUser = asyncHandler(async (req, res, next) => {
 
     querySnapshot.forEach( (doc) => {
         if(doc.data().id_user == id){
+            if(doc.data().save == "1"){
             connectTosection.forEach( (model) => {
                 if(model.id == doc.data().id_section){
                     let added= {id:doc.id, ...doc.data(),...model.data()};
                      console.log(added);
                       interests.push(added);
                 }
-            });   
+            }); 
+        }  
         }
        
 });
