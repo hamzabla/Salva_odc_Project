@@ -287,7 +287,15 @@ class _SectionDetailsState extends State<SectionDetails> {
                 if(!review.toString().isEmpty){
                   insertReview();
                   Navigator.of(context).pop(review.text);
-                  Navigator.pushReplacementNamed(context, "/all_sections");
+                  Navigator.pushReplacementNamed(context, "/section_details",arguments: {
+                    'title': data["title"],
+                    'tags': data["tags"],
+                    'picture': data["picture"],
+                    'adress': data["adress"],
+                    'description': data["description"],
+                    'id': data["id"],
+                    'current': currentUser,
+                  });
                 }
 
                 },

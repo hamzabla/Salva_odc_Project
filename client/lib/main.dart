@@ -2,7 +2,7 @@ import 'package:client/pages/Login.dart';
 import 'package:client/pages/SignUp.dart';
 import 'package:client/pages/addsection.dart';
 import 'package:client/pages/all_sections.dart';
-import 'package:client/pages/delivry-adress.dart';
+import 'package:client/pages/order_product.dart';
 import 'package:client/pages/life%20guard.dart';
 import 'package:client/pages/popular_sections.dart';
 import 'package:client/pages/profile.dart';
@@ -45,7 +45,7 @@ void main() async {
       '/signup': (context) => SignUp(),
       '/life_guard': (context) => lifeguard(),
       '/add_section': (context) => addsection(),
-      '/delivery_adress':(context) => deliveryAdress(),
+      '/order_product':(context) => deliveryAdress(),
       '/login':(context) => SignIn(),
 
     }

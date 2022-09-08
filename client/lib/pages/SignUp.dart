@@ -367,13 +367,15 @@ class _SignUpState extends State<SignUp> {
                                   fontSize: 16,
                                 ))),
                             onPressed: () {
-                              Navigator.of(context).pushNamed("/life_guard", arguments: {
+                              Navigator.pushNamed(context,
+                                  "/life_guard",
+                                  arguments: {
                                 'username': username.text,
                                 "email": email.text,
                                 "phone": phone.text,
                                 "password": password,
                                 "role": role,
-                                "fullName":fullname.text
+                                "fullName":fullname.text,
                               });
                             },
                           ),

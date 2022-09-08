@@ -23,7 +23,7 @@ class _SavedSectionsState extends State<SavedSections> {
   getAllInterestByUser() async {
     current = await APIServices.getUserProfile();
     var user_id=current['data']['id'];
-    var url = Uri.http(Config.apiURL, "${Config.interestAPI}user/${user_id}");
+    var url = Uri.http(Config.apiURL, "${Config.interestAPI}save/${user_id}");
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url);
 

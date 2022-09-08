@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../main_screen.dart';
+
 class deliveryAdress extends StatefulWidget {
   @override
   State<deliveryAdress> createState() => _deliveryAdressState();
@@ -17,18 +19,18 @@ class _deliveryAdressState extends State<deliveryAdress> {
     return Scaffold(
       backgroundColor: Color(0xfff2f3f3),
 
-      appBar: AppBar(
+     appBar: AppBar(
         backgroundColor: Color(0xffF2F3F3),
         elevation: 0,
 
         leading: IconButton(
 
           icon: Icon(
-            Icons.read_more,
+            Icons.arrow_back_outlined,
             color: Colors.black45,
           ),
           onPressed: () {
-
+            Navigator.of(context).pushNamedAndRemoveUntil("/main_screen", (route) => false);
           },
         ),
         leadingWidth: 25.5,
@@ -52,9 +54,8 @@ class _deliveryAdressState extends State<deliveryAdress> {
             child: SafeArea(
               child: Column(
                 children: [
-
-                  Image.asset("assets/logo_sans_bg.png",
-                      height: 160, width: 125),
+                  Image.network("https://firebasestorage.googleapis.com/v0/b/salva-f47c9.appspot.com/o/logo_sans_bg.png?alt=media&token=e099926b-bddd-415e-ad7c-9b8e2fbd78a2" ,
+                      height: 160, width: 125,),
                   SizedBox(height: 1),
                   Text(
                     "Salva",
