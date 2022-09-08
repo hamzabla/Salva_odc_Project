@@ -124,11 +124,10 @@ const getAllInterests = asyncHandler(async (req, res, next) => {
     );
 });
 
-const getAllInterestsByUser = asyncHandler(async (req, res, next) => {
+const getAllSavedByUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     let interests = [];
     let countsaved = 0;
-    let countliked = 0;
     const querySnapshot = await db.collection('interests').get();
     const connectTosection = await db.collection('sections').get();
 
@@ -151,23 +150,58 @@ for(let i=0;i<interests.length;i++){
     if(interests[i]['save']== '1'){
           countsaved++;
     }
-    if(interests[i]['like']== '1'){
-     countliked++;
-}
 }
 
 res.status(200).json(
     {
         success: true,
-        operation: "getting all interests by user ",
+        operation: "getting all saved section by user ",
         count: interests.length,
         countSaved: countsaved,
-        countLiked: countliked,
         data: interests
     }
 );
 
+});
 
+
+const getAlllikedByUser = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    let interests = [];
+    let countliked = 0;
+    const querySnapshot = await db.collection('interests').get();
+    const connectTosection = await db.collection('sections').get();
+
+    querySnapshot.forEach( (doc) => {
+        if(doc.data().id_user == id){
+            if(doc.data().like == "1"){
+            connectTosection.forEach( (model) => {
+                if(model.id == doc.data().id_section){
+                    let added= {id:doc.id, ...doc.data(),...model.data()};
+                     console.log(added);
+                      interests.push(added);
+                }
+            }); 
+        }  
+        }
+       
+});
+
+for(let i=0;i<interests.length;i++){
+    if(interests[i]['like']== '1'){
+        countliked++;
+    }
+}
+
+res.status(200).json(
+    {
+        success: true,
+        operation: "getting all liked section by user ",
+        count: interests.length,
+        countLiked: countliked,
+        data: interests
+    }
+);
 
 });
 
@@ -279,5 +313,6 @@ module.exports = {
     getAllInterests,
     addUpdateInterest,
     getInterestById,
-    getAllInterestsByUser
+    getAllSavedByUser,
+    getAlllikedByUser
 }

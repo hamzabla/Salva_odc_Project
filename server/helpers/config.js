@@ -14,7 +14,9 @@ const {
     PROJECT_ID,
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,
-    APP_ID
+    APP_ID,
+    OneSignal_APP_ID,
+    OneSignal_APP_KEY
 } = process.env;
 
 assert(PORT, 'PORT is required');
@@ -32,5 +34,9 @@ module.exports = {
         storageBucket: STORAGE_BUCKET,
         messagingSenderId: MESSAGING_SENDER_ID,
         appId: APP_ID
+    },
+    onesignalConfig: {
+        appId: OneSignal_APP_ID,
+        appKey: OneSignal_APP_KEY,
     }
 }

@@ -9,6 +9,8 @@ const users = require('./routes/userRoute');
 const sections = require('./routes/sectionRoute');
 const reviews = require('./routes/reviewRoute');
 const interest = require('./routes/interestsRoutes');
+const lifeguard = require('./routes/lifeguardRoutes');
+const notification = require('./routes/notificationRoute');
 
 const app = express();
 app.use(morgan("dev"));
@@ -21,5 +23,7 @@ app.use('/api/v1/users',users);
 app.use('/api/v1/sections',sections);
 app.use('/api/v1/reviews',reviews);
 app.use('/api/v1/interests',interest);
+app.use('/api/v1/lifeguards',lifeguard);
+app.use('/api/v1/notifications',notification);
 
 app.listen(config.port, () => console.log(`Server started on port ${config.port}`));
