@@ -28,6 +28,11 @@ class _MapState extends State<Map> {
     ];
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Location',
+            style: TextStyle( color: Color(0xff073983),)),
+        backgroundColor: Colors.white70,
+      ),
       body: FlutterMap(
         options: MapOptions(
           center: LatLng(33.9715904, -6.8498129),

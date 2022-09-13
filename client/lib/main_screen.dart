@@ -5,7 +5,7 @@ import 'package:client/pages/profile.dart';
 import 'package:client/pages/saved_sections.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-
+import 'package:client/index.dart';
 class MainScreen extends StatefulWidget {
 
   @override
@@ -13,8 +13,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-  int selectedIndex = 0;
+ // int selectedIndex = 0;
 
   final screen = [
     Home(),
@@ -25,6 +24,21 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //data = ModalRoute.of(context)!.settings.arguments as Map;
+    /*if(data !=null){
+      int index = data['index'];
+      if(index ==0){
+        selectedIndex = 0;
+      }else if(index ==1){
+        selectedIndex = 1;
+      }else if(index ==2){
+        selectedIndex = 2;
+      }else{
+        selectedIndex =0;
+      }
+    }*/
+
+
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         index: selectedIndex,

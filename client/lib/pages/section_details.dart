@@ -22,6 +22,7 @@ class _SectionDetailsState extends State<SectionDetails> {
 
   String id_section = "";
   var currentUser;
+  var pic;
   var review = TextEditingController();
   var count = 0;
   String liked = "0";
@@ -93,7 +94,7 @@ class _SectionDetailsState extends State<SectionDetails> {
      data = ModalRoute.of(context)!.settings.arguments as Map;
      String stringTags = '${data['tags']}';
      String stringlocation = '${data['adress']}';
-
+     pic = data['picture'];
      id_section = data['id'];
      currentUser=data['current'];
 
@@ -129,7 +130,7 @@ class _SectionDetailsState extends State<SectionDetails> {
                         Stack(
                           clipBehavior: Clip.none,
                           children: <Widget>[
-                            buildImage(),
+                            buildImage(pic),
                             Positioned(top: 255, left: 280, child: buildButtons(liked,saved,currentUser['data']['id'],id_section)),
                           ],
                         ),
@@ -204,7 +205,7 @@ class _SectionDetailsState extends State<SectionDetails> {
                         ),
                         child: CircleAvatar(
                           backgroundImage:
-                          NetworkImage('https://placeimg.com/640/480/nature'),
+                          NetworkImage('https://placeimg.com/640/480/people'),
                         )),
                     SizedBox(
                       width: 10,
@@ -446,10 +447,7 @@ class _SectionDetailsState extends State<SectionDetails> {
     );
   }
 
-  Widget buildImage() {
-    final image = NetworkImage(
-      'https://placeimg.com/640/480/people',
-    );
+  Widget buildImage(pic) {
 
     return Container(
         decoration: BoxDecoration(
@@ -463,7 +461,7 @@ class _SectionDetailsState extends State<SectionDetails> {
           ],
         ),
         child: Image.network(
-          'https://placeimg.com/640/480/nature',
+          '${pic}',
           width: double.infinity,
           height: 280,
           fit: BoxFit.cover,

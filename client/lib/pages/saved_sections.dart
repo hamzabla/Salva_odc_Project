@@ -161,7 +161,7 @@ class _SavedSectionsState extends State<SavedSections> {
           child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage('https://placeimg.com/640/480/nature'),
+                  image: NetworkImage('${data[index]["Picture"]}'),
                   fit: BoxFit.fill,
                 )),
             child: Container(

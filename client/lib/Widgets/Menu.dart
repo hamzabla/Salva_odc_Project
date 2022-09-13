@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client/index.dart';
 import 'package:client/pages/all_sections.dart';
 import 'package:client/api_services.dart';
 import 'package:client/pages/loading.dart';
@@ -41,10 +42,8 @@ var current;
                 style: TextStyle(fontSize: 20),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    // Create the SelectionScreen in the next step.
-                    MaterialPageRoute(builder: (context) => MainScreen()));
+                selectedIndex = 0;
+                Navigator.of(context).pushNamedAndRemoveUntil("/main_screen",(route) => false,);
               }
           ),
           ListTile(
@@ -53,13 +52,10 @@ var current;
               'POPULAR',
               style: TextStyle(fontSize: 20),
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.add_circle_outline_outlined),
-            title: Text(
-              'ADD SECTION',
-              style: TextStyle(fontSize: 20),
-            ),
+            onTap: (){
+              selectedIndex = 1;
+              Navigator.of(context).pushNamedAndRemoveUntil("/main_screen",(route) => false,);
+            },
           ),
           ListTile(
             leading: Icon(Icons.add_shopping_cart_sharp),
@@ -79,6 +75,10 @@ var current;
               'SAVED',
               style: TextStyle(fontSize: 20),
             ),
+            onTap: (){
+              selectedIndex = 2;
+               Navigator.of(context).pushNamedAndRemoveUntil("/main_screen",(route) => false,);
+            },
           ),
           if(current['data']['role']=="lifguard")
           ListTile(

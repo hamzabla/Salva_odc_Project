@@ -59,7 +59,7 @@ class _addsectionState extends State<addsection> {
     final msg = jsonEncode({
       "Adress": adress.text,
       "Description": description.text,
-      "Picture": "picture.text",
+      "Picture": "https://placeimg.com/640/480/nature",
       "Tags": tags,
       "Title":title.text
     });
